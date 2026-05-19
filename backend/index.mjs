@@ -13,7 +13,9 @@ mongoose.connect(URL).then(() => {
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    exposedHeaders: ['authorization']
+}));
 
 app.use("/", router);
 

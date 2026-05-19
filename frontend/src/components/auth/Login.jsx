@@ -25,8 +25,13 @@ export default function Login() {
 
         try {
             const response = await axios.post('http://localhost:8080/login', formData)
-            localStorage.setItem('token', response.data.token)
-            navigate('/')
+            
+            const token = response.headers.authorization.split(' ')[1]
+            localStorage.setItem('token', token)
+
+            if (response.status === 200) {
+                navigate('/')
+            }
         } catch (error) {
             setError(error.response?.data?.message || 'Unable to connect to the server')
         }

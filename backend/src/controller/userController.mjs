@@ -42,7 +42,8 @@ const login = async (req, res) => {
             return res.status(400).json({ message: "Invalid password" });
         }
         const token = jwt.sign({ id: user._id }, secret_key, { expiresIn: "1h" });
-        res.status(200).json({ user, token });
+        res.setHeader('Authorization', `Bearer ${token}`);
+        res.status(200).json({message: "Login successful"});
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
