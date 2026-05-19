@@ -41,7 +41,7 @@ const login = async (req, res) => {
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid password" });
         }
-        const token = jwt.sign({ id: user._id }, secret_key, { expiresIn: "1h" });
+        const token = jwt.sign({ id: user._id }, secret_key, { expiresIn: "100h" });
         res.setHeader('Authorization', `Bearer ${token}`);
         res.status(200).json({message: "Login successful"});
     } catch (error) {
@@ -49,4 +49,13 @@ const login = async (req, res) => {
     }
 }
 
-export { signup, login };
+const getProfile = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.user.id);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message , status: 'dificult'});
+    }
+}
+
+export { signup, login, getProfile };

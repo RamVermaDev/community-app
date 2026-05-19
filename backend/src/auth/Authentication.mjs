@@ -2,17 +2,31 @@ import jwt from 'jsonwebtoken'
 import { secret_key } from '../../config.mjs'
 const authenticate = (req, res, next) => {
     try {
-        const token = req.header.authorization.split(' ')[1]
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized' })
+        const authHeader = req.headers.authorization;
+
+        if (!authHeader) {
+            return res.status(401).json({ message: 'Autherhead is not present' });
         }
-        const decoded = jwt.verify(token, secret_key)
+        const token = authHeader.split(' ')[1];
+
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+        const decoded = jwt.verify(token, secret_key);
         req.user = decoded
         next()
 
     } catch (error) {
-        res.status(401).json({ message: 'Unauthorized' })
+        res.status(500).json({ message: 'Internal server errorrrrr' })
     }
 }
 
-export { authenticate }
+const authorization = (req, res, next) => {
+    const user = req.user
+    if (user.role !== 'admin') {
+        return res.status(403).json({ message: 'Forbidden' })
+    }
+    next()
+}
+
+export { authenticate, authorization }

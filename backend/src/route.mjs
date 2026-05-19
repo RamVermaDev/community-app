@@ -1,5 +1,7 @@
 import express from "express";
-import { signup, login } from "./controller/userController.mjs";
+import { signup, login, getProfile } from "./controller/userController.mjs";
+import { authenticate } from "./auth/Authentication.mjs";
+
 
 const router = express.Router();
 
@@ -9,5 +11,6 @@ router.get("/api", (req, res) => {
 
 router.post("/signup", signup);
 router.post("/login", login);
+router.get("/profile", authenticate, getProfile);
 
 export default router;
