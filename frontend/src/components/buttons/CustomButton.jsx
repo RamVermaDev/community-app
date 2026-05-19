@@ -1,0 +1,9 @@
+import styles from './CustomButton.module.css'
+
+export default function CustomButton({ text, style, handler = () => {} }) {
+  return (
+    <button className={`${styles.button} ${style}`} onClick={handler}>
+      {text}
+    </button>
+  )
+}
