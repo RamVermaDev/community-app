@@ -43,7 +43,7 @@ const login = async (req, res) => {
         }
         const token = jwt.sign({ id: user._id }, secret_key, { expiresIn: "100h" });
         res.setHeader('Authorization', `Bearer ${token}`);
-        res.status(200).json({message: "Login successful"});
+        res.status(200).json({ message: "Login successful" });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -51,11 +51,36 @@ const login = async (req, res) => {
 
 const getProfile = async (req, res) => {
     try {
-        const user = await userModel.findById(req.user.id);
+        const user = await userModel.findById(req.user.id).select("-password");
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).json({ message: error.message , status: 'dificult'});
+        res.status(500).json({ message: error.message, status: 'dificult' });
     }
 }
 
-export { signup, login, getProfile };
+const uploadProfileImage = async (req, res) => {
+    try {
+        const updateData = {};
+
+        if (req.file) {
+            updateData.profilePicture = req.file.path.replace(/\\/g, "/");
+        }
+
+        const user = await userModel.findByIdAndUpdate(
+            req.user.id,
+            updateData,
+            { new: true }
+        ).select("-password");
+
+        res.status(200).json({
+            message: "Profile image updated successfully",
+            user,
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        });
+    }
+}
+
+export { signup, login, getProfile, uploadProfileImage };

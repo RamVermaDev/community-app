@@ -1,28 +1,33 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    phone: { type: String, required: true, unique: true },
+    profilePicture: { type: String, default: null },
+    bio: { type: String, default: null },
+    followers: { type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] },
+    following: { type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] },
+    address: {
+        street: { type: String, default: null },
+        city: { type: String, default: null },
+        state: { type: String, default: null },
+        zip: { type: String, default: null },
+        country: { type: String, default: null },
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    phone: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    isDelete: {
-        type: Boolean,
-        default: false
-    }
+    education: { type: [String], default: [] },
+    dob: { type: Date, default: null },
+    gender: { type: String, default: null },
+    maritalStatus: { type: String, default: null },
+    occupation: { type: String, default: null },
+    isDeleted: { type: Boolean, default: false },
+    isActive: { type: Boolean, default: true },
+    isVerified: { type: Boolean, default: false },
+    isPremium: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: false },
+    isSuperAdmin: { type: Boolean, default: false },
+    isSuperAdmin: { type: Boolean, default: false },
 }, {
     timestamps: true
 });

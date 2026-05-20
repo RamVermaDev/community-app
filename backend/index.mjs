@@ -11,6 +11,7 @@ mongoose.connect(URL).then(() => {
 });
 
 const app = express();
+app.use("/uploads", express.static("uploads"));
 
 app.use(express.json());
 app.use(cors({
