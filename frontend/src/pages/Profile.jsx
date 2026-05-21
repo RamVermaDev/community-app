@@ -83,7 +83,7 @@ export default function Profile() {
                     <>
                         <section className={styles.hero}>
                             <div className={styles.identity}>
-                                <ProfilePicture user={user} onUpdated={setUser} />
+                                <ProfilePicture user={user} onUpdated={setUser} canEditProfile = {true} />
                                 <div>
                                     <p className={styles.eyebrow}>Community member</p>
                                     <h1>{user.name}</h1>
@@ -102,7 +102,7 @@ export default function Profile() {
                         <section className={styles.contentGrid}>
                             <div className={styles.mainColumn}>
 
-                                <ProfilePanel user={user} onUpdate={setUser} />
+                                <ProfilePanel user={user} onUpdate={setUser}/>
 
                                 <section className={styles.panel}>
                                     <div className={styles.panelHeader}>

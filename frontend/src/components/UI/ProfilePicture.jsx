@@ -3,7 +3,12 @@ import axios from 'axios'
 import styles from './ProfilePicture.module.css'
 import { FiCamera, FiX } from 'react-icons/fi'
 
-export default function ProfilePicture({ user, onUpdated }) {
+export default function ProfilePicture({
+  user,
+  onUpdated,
+  style,
+  canEditProfile = false,
+}) {
   const initials = useMemo(() => {
     if (!user?.name) return 'U'
 
@@ -27,10 +32,13 @@ export default function ProfilePicture({ user, onUpdated }) {
   const [error, setError] = useState('')
 
   const handleIconClick = () => {
+    if (!canEditProfile) return
     fileRef.current?.click()
   }
 
   const handleFileChange = (e) => {
+    if (!canEditProfile) return
+
     const file = e.target.files[0]
     if (!file) return
 
@@ -82,8 +90,8 @@ export default function ProfilePicture({ user, onUpdated }) {
   }
 
   return (
-    <div className={styles.avatarWrap}>
-      <div className={styles.avatar}>
+    <div className={`${styles.avatarWrap} ${style}`}>
+      <div className={`${styles.avatar} ${style}`}>
         {preview || profileImg ? (
           <img
             src={preview || profileImg}
@@ -95,61 +103,69 @@ export default function ProfilePicture({ user, onUpdated }) {
         )}
       </div>
 
-      <button
-        type="button"
-        className={styles.editBtn}
-        onClick={handleIconClick}
-        aria-label="Change profile photo"
-      >
-        <FiCamera size={16} />
-      </button>
+      {canEditProfile && (
+        <>
+          <button
+            type="button"
+            className={styles.editBtn}
+            onClick={handleIconClick}
+            aria-label="Change profile photo"
+          >
+            <FiCamera size={16} />
+          </button>
 
-      <input
-        type="file"
-        ref={fileRef}
-        accept="image/*"
-        onChange={handleFileChange}
-        hidden
-      />
+          <input
+            type="file"
+            ref={fileRef}
+            accept="image/*"
+            onChange={handleFileChange}
+            hidden
+          />
 
-      {showPopup && (
-        <div className={styles.popup}>
-          <div className={styles.popupBox}>
-            <button
-              type="button"
-              className={styles.closeBtn}
-              onClick={handleCancel}
-              aria-label="Close"
-            >
-              <FiX size={18} />
-            </button>
+          {showPopup && (
+            <div className={styles.popup}>
+              <div className={styles.popupBox}>
+                <button
+                  type="button"
+                  className={styles.closeBtn}
+                  onClick={handleCancel}
+                  aria-label="Close"
+                >
+                  <FiX size={18} />
+                </button>
 
-            <img src={preview} alt="Selected profile preview" className={styles.previewImg} />
-            <h3>Update profile photo</h3>
-            <p>Save this image as your public profile picture.</p>
-            {error && <span className={styles.error}>{error}</span>}
+                <img
+                  src={preview}
+                  alt="Selected profile preview"
+                  className={styles.previewImg}
+                />
+                <h3>Update profile photo</h3>
+                <p>Save this image as your public profile picture.</p>
+                {error && <span className={styles.error}>{error}</span>}
 
-            <div className={styles.popupActions}>
-              <button
-                type="button"
-                className={styles.secondaryBtn}
-                onClick={handleCancel}
-                disabled={saving}
-              >
-                Cancel
-              </button>
+                <div className={styles.popupActions}>
+                  <button
+                    type="button"
+                    className={styles.secondaryBtn}
+                    onClick={handleCancel}
+                    disabled={saving}
+                  >
+                    Cancel
+                  </button>
 
-              <button
-                type="button"
-                className={styles.primaryBtn}
-                onClick={handleUpdate}
-                disabled={saving}
-              >
-                {saving ? 'Saving...' : 'Save photo'}
-              </button>
+                  <button
+                    type="button"
+                    className={styles.primaryBtn}
+                    onClick={handleUpdate}
+                    disabled={saving}
+                  >
+                    {saving ? 'Saving...' : 'Save photo'}
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          )}
+        </>
       )}
     </div>
   )

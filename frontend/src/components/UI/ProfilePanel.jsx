@@ -1,52 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import { useState } from 'react'
 import styles from './ProfilePanel.module.css'
 import CustomButton from '../buttons/CustomButton'
 import axios from 'axios'
 
 export default function ProfilePanel({ user, onUpdate }) {
-    const accountStatus = user?.isDeleted ? 'Inactive' : 'Active'
-
     const [isEditing, setIsEditing] = useState(false)
 
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        gender: '',
-        maritalStatus: '',
-        bio: '',
-        occupation: '',
-        dob: '',
-        address: {
-            street: '',
-            city: '',
-            state: '',
-            zip: '',
-            country: ''
-        }
-    });
-
-    useEffect(() => {
-        if (user) {
-            setFormData({
-                name: user.name || '',
-                email: user.email || '',
-                phone: user.phone || '',
-                gender: user.gender || '',
-                maritalStatus: user.maritalStatus || '',
-                bio: user.bio || '',
-                occupation: user.occupation || '',
-                dob: user.dob ? user.dob.slice(0, 10) : '',
-                address: {
-                    street: user.address?.street || '',
-                    city: user.address?.city || '',
-                    state: user.address?.state || '',
-                    zip: user.address?.zip || '',
-                    country: user.address?.country || ''
-                }
-            });
-        }
-    }, [user]);
+    const [formData, setFormData] = useState(() => getProfileFormData(user));
 
     const handleAddressChange = (e) => {
         const { name, value } = e.target;
@@ -114,7 +74,13 @@ export default function ProfilePanel({ user, onUpdate }) {
                     </div>
                     {!isEditing && (
                         <div>
-                            <CustomButton text="Edit" handler={() => { setIsEditing(true) }} />
+                            <CustomButton
+                                text="Edit"
+                                handler={() => {
+                                    setFormData(getProfileFormData(user))
+                                    setIsEditing(true)
+                                }}
+                            />
                         </div>
                     )}
                 </div>
@@ -293,4 +259,24 @@ function formatDate(value) {
         day: 'numeric',
         year: 'numeric'
     }).format(new Date(value))
+}
+
+function getProfileFormData(user) {
+    return {
+        name: user?.name || '',
+        email: user?.email || '',
+        phone: user?.phone || '',
+        gender: user?.gender || '',
+        maritalStatus: user?.maritalStatus || '',
+        bio: user?.bio || '',
+        occupation: user?.occupation || '',
+        dob: user?.dob ? user.dob.slice(0, 10) : '',
+        address: {
+            street: user?.address?.street || '',
+            city: user?.address?.city || '',
+            state: user?.address?.state || '',
+            zip: user?.address?.zip || '',
+            country: user?.address?.country || ''
+        }
+    }
 }

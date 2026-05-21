@@ -12,7 +12,7 @@ const authenticate = (req, res, next) => {
         if (!token) {
             return res.status(401).json({ message: 'Unauthorized' });
         }
-        const decoded = jwt.verify(token, secret_key);
+const decoded = jwt.verify(token, secret_key);
         req.user = decoded
         next()
 
@@ -25,7 +25,7 @@ const authorization = (req, res, next) => {
     const userId = req.params.userId
     const userName = req.params.userName
     const user = req.user
-    if (user._id !== userId || user.name !== userName) {
+    if (userId && user.id !== userId) {
         return res.status(403).json({ message: 'Forbidden' })
     }
     next()

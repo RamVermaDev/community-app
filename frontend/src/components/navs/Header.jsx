@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import logo from '../../assets/logo.png'
 import CustomButton from '../buttons/CustomButton'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 
 export default function Header() {
     const userId = localStorage.getItem('userId')
@@ -11,7 +10,7 @@ export default function Header() {
     const navigate = useNavigate()
     let menus = [
         { name: 'Home', path: `/${userId}/${userName}` },
-        { name: 'Post', path: '/posts' },
+        { name: 'Post', path: `/${userId}/${userName}/posts` },
         { name: 'Reel', path: '/reels' },
         { name: 'Connect', path: '/connect' },
         { name: 'Jobs', path: '/jobs' },
