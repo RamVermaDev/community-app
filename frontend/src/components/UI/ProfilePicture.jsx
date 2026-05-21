@@ -52,7 +52,7 @@ export default function ProfilePicture({ user, onUpdated }) {
       formData.append('profileImage', selectedFile)
 
       const response = await axios.put(
-        'http://localhost:8080/update-profile',
+        'http://localhost:8080/update-profile-Image',
         formData,
         {
           headers: {

@@ -29,8 +29,15 @@ export default function Login() {
             const token = response.headers.authorization.split(' ')[1]
             localStorage.setItem('token', token)
 
+            const userId = response.data.userId
+            const name = response.data.userName
+            const userName = name.toLowerCase().replace(/\s+/g, "-");
+
+            localStorage.setItem('userId', userId)
+            localStorage.setItem('userName', userName)
+
             if (response.status === 200) {
-                navigate('/')
+                navigate(`/${userId}/${userName}`)
             }
         } catch (error) {
             setError(error.response?.data?.message || 'Unable to connect to the server')

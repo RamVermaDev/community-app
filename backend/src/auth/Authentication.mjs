@@ -22,8 +22,10 @@ const authenticate = (req, res, next) => {
 }
 
 const authorization = (req, res, next) => {
+    const userId = req.params.userId
+    const userName = req.params.userName
     const user = req.user
-    if (user.role !== 'admin') {
+    if (user._id !== userId || user.name !== userName) {
         return res.status(403).json({ message: 'Forbidden' })
     }
     next()

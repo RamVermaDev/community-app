@@ -8,10 +8,10 @@ export default function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Home/>} />
+        <Route path="/:userName/:userId" element={<Home/>} />
         <Route path="/signup" element={<SignUp/>} />
         <Route path="/login" element={<Login/>} />
-        <Route path="/profile" element={<Profile/>} />
+        <Route path="/:userName/:userId/profile" element={<Profile/>} />
       </Routes>
     </div>
   )

@@ -6,9 +6,11 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 export default function Header() {
+    const userId = localStorage.getItem('userId')
+    const userName = localStorage.getItem('userName')
     const navigate = useNavigate()
     let menus = [
-        { name: 'Home', path: '/' },
+        { name: 'Home', path: `/${userId}/${userName}` },
         { name: 'Post', path: '/posts' },
         { name: 'Reel', path: '/reels' },
         { name: 'Connect', path: '/connect' },
@@ -22,24 +24,13 @@ export default function Header() {
         navigate('/login')
     }
 
-    const handleProfile = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/profile', {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            })
-            if(response.status === 200) {
-                navigate('/profile')
-            }
-        } catch (error) {
-            console.log(error)
-        }
+    const handleProfile = () => {
+        navigate(`/${userId}/${userName}/profile`)
     }
 
     return (
         <div className={styles.header}>
-            <Link to={ "/" } className={styles.logoLink}>
+            <Link to={userId && userName ? `/${userId}/${userName}` : '/login'} className={styles.logoLink}>
                 <div className={styles.logoContainer}>
                     <img src={logo} alt="Tech Community" className={styles.logoImg} />
                     <p className={styles.logo}>Tech Community</p>

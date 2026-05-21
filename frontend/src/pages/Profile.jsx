@@ -5,6 +5,7 @@ import Header from '../components/navs/Header'
 import styles from './Profile.module.css'
 
 import ProfilePicture from '../components/UI/ProfilePicture'
+import ProfilePanel from '../components/UI/ProfilePanel'
 
 export default function Profile() {
     const navigate = useNavigate()
@@ -100,21 +101,8 @@ export default function Profile() {
 
                         <section className={styles.contentGrid}>
                             <div className={styles.mainColumn}>
-                                <section className={styles.panel}>
-                                    <div className={styles.panelHeader}>
-                                        <div>
-                                            <p className={styles.eyebrow}>Profile</p>
-                                            <h2>Personal information</h2>
-                                        </div>
-                                    </div>
 
-                                    <div className={styles.infoGrid}>
-                                        <InfoItem label="Full name" value={user.name} />
-                                        <InfoItem label="Email address" value={user.email} />
-                                        <InfoItem label="Phone number" value={user.phone} />
-                                        <InfoItem label="Account status" value={accountStatus} />
-                                    </div>
-                                </section>
+                                <ProfilePanel user={user} onUpdate={setUser} />
 
                                 <section className={styles.panel}>
                                     <div className={styles.panelHeader}>
@@ -173,6 +161,28 @@ export default function Profile() {
                                             <strong>{joinedDate}</strong>
                                             <span>Joined</span>
                                         </div>
+                                        <div>
+                                            <strong>{user?.followers?.length || 0}</strong>
+                                            <span>Followers</span>
+                                        </div>
+                                        <div>
+                                            <strong>{user?.following?.length || 0}</strong>
+                                            <span>Following</span>
+                                        </div>
+                                        <div className={styles.addressCard}>
+                                            <h4>Address</h4>
+
+                                            <p>{user?.address?.street || 'Not available'}</p>
+
+                                            <p>
+                                                {user?.address?.city || ''}{" "}
+                                                {user?.address?.state || ''}
+                                            </p>
+
+                                            <p>{user?.address?.zip || ''}</p>
+
+                                            <p>{user?.address?.country || ''}</p>
+                                        </div>
                                     </div>
                                 </section>
                             </aside>
@@ -180,15 +190,6 @@ export default function Profile() {
                     </>
                 )}
             </main>
-        </div>
-    )
-}
-
-function InfoItem({ label, value }) {
-    return (
-        <div className={styles.infoItem}>
-            <span>{label}</span>
-            <strong>{value || 'Not available'}</strong>
         </div>
     )
 }

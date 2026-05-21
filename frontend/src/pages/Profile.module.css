@@ -353,6 +353,8 @@
   }
 }
 
+
+
 @media (max-width: 640px) {
   .shell {
     width: min(100% - 20px, 1180px);

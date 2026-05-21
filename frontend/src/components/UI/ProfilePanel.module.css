@@ -1,0 +1,104 @@
+.panel{
+  border: 1px solid #dfe7f3;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(21, 32, 51, 0.06);
+  padding: 24px;
+}
+
+.panel h2 {
+  margin: 0;
+  letter-spacing: 0;
+  font-size: 22px;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.formGrid,
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.inputItem,
+.infoItem {
+  min-height: 92px;
+  padding: 18px;
+  border: 1px solid #e5edf7;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.inputItem{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.inputItem span,
+.infoItem span {
+  display: block;
+  margin-bottom: 10px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.input,
+.infoItem strong {
+  display: block;
+  color: #152033;
+  font-size: 16px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.input {
+    padding: 7px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-size: 15px;
+    transition: 0.3s ease;
+}
+
+.input:focus {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.buttonGroup{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.addressSection{
+    margin-top: 20px;
+}
+
+.sectionTitle{
+    margin: 0 0 12px;
+    color: #152033;
+    font-size: 16px;
+    font-weight: 700;
+}
